@@ -1,0 +1,7 @@
+.patients-today-list{
+    margin-left: 300px;
+    width: 100%;
+    border-radius: 23px;
+    background-color: #ddd;
+    box-shadow: 0 4px 8px rgba(84, 13, 199, 0.445);   
+}

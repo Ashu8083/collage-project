@@ -1,0 +1,10 @@
+.pe{
+   
+    height: 70%;
+    position: relative;
+    border-radius: 23px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #fffefe;
+    box-shadow: 0 4px 8px rgba(84, 13, 199, 0.445);   
+}

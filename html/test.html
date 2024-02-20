@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <style>
+        /* CSS styles */
+        body {
+            background-color: #ffffff;
+            width: 100%;
+            font-family: "Arial", sans-serif;
+            height: 100%;
+        }
+        .widget {
+            margin: 0 auto;
+            width: 500px;
+            margin-top: 50px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 1px 0px #06060d;
+        }
+        .chart-container {
+            filter: blur(0px);
+            padding: 100px;
+        }
+        .shadow {
+            -webkit-filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.5));
+            filter: drop-shadow(0px 10px 10px rgba(30, 202, 211, 0.5));
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <center>
+            <div id="chart" class="chart-container"></div>
+        </center>
+    </div>
+
+    <!-- Include D3.js library -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+    <!-- JavaScript code -->
+    <script>
+        var dataset = [
+            { name: "Direct", count: 2742 },
+            { name: "Facebook", count: 2242 },
+            { name: "Pinterest", count: 3112 },
+            { name: "Search", count: 937 },
+            { name: "Others", count: 1450 }
+        ];
+
+        var total = 0;
+
+        dataset.forEach(function (d) {
+            total += d.count;
+        });
+
+        var pie = d3.layout
+            .pie()
+            .value(function (d) {
+                return d.count;
+            })
+            .sort(null);
+
+        var w = 300,
+            h = 300;
+
+        var outerRadiusArc = w / 2 - 20;
+        var innerRadiusArc = w / 4;
+
+        var color = d3.scale
+            .ordinal()
+            .range(["#1ECAD3", "#00A0C6", "#F7A92E", "#48FEFE", "#D7D9DA"]);
+
+        var svg = d3
+            .select("#chart")
+            .append("svg")
+            .attr({
+                width: w,
+                height: h,
+                class: "shadow"
+            })
+            .append("g")
+            .attr({
+                transform: "translate(" + w / 2 + "," + h / 2 + ")"
+            });
+
+        var arc = d3.svg.arc()
+            .innerRadius(innerRadiusArc)
+            .outerRadius(outerRadiusArc);
+
+        var path = svg.selectAll("path")
+            .data(pie(dataset))
+            .enter()
+            .append("path")
+            .attr("fill", function(d, i) { return color(d.data.name); })
+            .attr("d", arc)
+            .each(function(d) { this._current = d; }) // store the initial angles
+            .on("mouseover", function(d) {
+                d3.select(this).transition()
+                    .duration(200)
+                    .attr("d", d3.svg.arc()
+                        .innerRadius(innerRadiusArc + 10)
+                        .outerRadius(outerRadiusArc + 10)
+                    );
+            })
+            .on("mouseout", function(d) {
+                d3.select(this).transition()
+                    .duration(200)
+                    .attr("d", arc);
+            });
+
+        // Function to transition pie chart arcs
+        function arcTween(a) {
+            var i = d3.interpolate(this._current, a);
+            this._current = i(0);
+            return function(t) {
+                return arc(i(t));
+            };
+        }
+
+        // Update pie chart on data change
+        function update() {
+            path = path.data(pie(dataset)); // update the data
+            path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+        }
+
+        // Initially draw the chart
+        update();
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+body{
+    background: url("spi.jpg") ;
+    margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;   
+    padding: 10px;
+    width: 50%;
+    color: white;
+}
+.container{
+    margin: 0 auto;
+    width: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex: 1 1 100%;
+    align-items: stretch;
+    justify-content: space-between;
+    box-shadow: 0 0 20px 6px #090b6f85;
+}
+
+.container div{
+    height: auto;
+    
+}
+.container .left{
+    padding: 20px;
+    background: #1a1717;
+    height: auto;
+    width:100%;
+    background-size: cover;
+   
+}
+.container .left h2 {
+    line-height: 1;
+    font-weight: 900;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+.container .right{
+    padding: 25%;
+    background-color: rgba(255, 0, 0, 0.295);
+    width: 100%;
+    display:;
+    height: min-content;
+    background-size: cover;
+    
+}
+.container .right input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 25px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #B0B3B9;
+}
+
